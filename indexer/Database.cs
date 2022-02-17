@@ -9,9 +9,12 @@ namespace Indexer
         private SqliteConnection _connection;
         public Database()
         {
+     
             var connectionStringBuilder = new SqliteConnectionStringBuilder();
 
-            connectionStringBuilder.DataSource = "./searchDB.db";
+            connectionStringBuilder.Mode = SqliteOpenMode.ReadWriteCreate;
+           
+            connectionStringBuilder.DataSource = "/Users/ole/database/searchDB.db";
 
 
             _connection = new SqliteConnection(connectionStringBuilder.ConnectionString);

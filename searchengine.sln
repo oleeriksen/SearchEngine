@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wordcount", "wordcount\word
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "indexer", "indexer\indexer.csproj", "{7F4ADC70-20AE-423B-9D46-FABEE2E9F5D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleSearch", "ConsoleSearch\ConsoleSearch.csproj", "{8DF99C5C-09E2-430F-8DAD-5052DF2A9076}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7F4ADC70-20AE-423B-9D46-FABEE2E9F5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F4ADC70-20AE-423B-9D46-FABEE2E9F5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F4ADC70-20AE-423B-9D46-FABEE2E9F5D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DF99C5C-09E2-430F-8DAD-5052DF2A9076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DF99C5C-09E2-430F-8DAD-5052DF2A9076}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DF99C5C-09E2-430F-8DAD-5052DF2A9076}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF99C5C-09E2-430F-8DAD-5052DF2A9076}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
