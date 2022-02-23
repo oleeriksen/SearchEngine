@@ -24,7 +24,7 @@ namespace Indexer
             Execute("DROP TABLE IF EXISTS Occ");
 
             Execute("DROP TABLE IF EXISTS document");
-            Execute("CREATE TABLE document(id INTEGER PRIMARY KEY AUTOINCREMENT, url VARCHAR(500))");
+            Execute("CREATE TABLE document(id INTEGER PRIMARY KEY, url TEXT, idxTime TEXT)");
 
             Execute("DROP TABLE IF EXISTS word");
             Execute("CREATE TABLE word(id INTEGER PRIMARY KEY, name VARCHAR(50))");
@@ -32,7 +32,7 @@ namespace Indexer
             Execute("CREATE TABLE Occ(wordId INTEGER, docId INTEGER, "
                   + "FOREIGN KEY (wordId) REFERENCES word(id), "
                   + "FOREIGN KEY (docId) REFERENCES document(id))");
-            //execute("CREATE INDEX word_index ON Occ (wordId)");
+            //Execute("CREATE INDEX word_index ON Occ (wordId)");
         }
 
         private void Execute(string sql)
@@ -119,7 +119,7 @@ namespace Indexer
         public void InsertDocument(int id, string url)
         {
 
-            var insertCmd = new SqliteCommand("INSERT INTO document(id, url) VALUES(@id,@url)");
+            var insertCmd = new SqliteCommand("INSERT INTO document(id, url, idxTime) VALUES(@id,@url, @idxTime)");
             insertCmd.Connection = _connection;
 
             var pName = new SqliteParameter("url", url);
@@ -128,6 +128,8 @@ namespace Indexer
             var pCount = new SqliteParameter("id", id);
             insertCmd.Parameters.Add(pCount);
 
+            var pIdxTime = new SqliteParameter("idxTime", DateTime.Now.ToShortTimeString());
+            insertCmd.Parameters.Add(pIdxTime);
             insertCmd.ExecuteNonQuery();
 
         }
