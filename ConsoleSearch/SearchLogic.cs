@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CommonStuff.BE;
 
 namespace ConsoleSearch
 {
@@ -28,7 +29,7 @@ namespace ConsoleSearch
             return mDatabase.GetDocuments(wordIds);
         }
 
-        public List<string> GetDocumentDetails(List<int> docIds)
+        public List<BEDocument> GetDocumentDetails(List<int> docIds)
         {
             return mDatabase.GetDocDetails(docIds);
         }

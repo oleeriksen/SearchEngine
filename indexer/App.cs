@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using CommonStuff;
 
 namespace Indexer
 {
@@ -16,7 +17,7 @@ namespace Indexer
             Crawler crawler = new Crawler(db);
             
 
-            var root = new DirectoryInfo(@"/Users/ole/data");
+            var root = new DirectoryInfo(Config.FOLDER);
 
             DateTime start = DateTime.Now;
 

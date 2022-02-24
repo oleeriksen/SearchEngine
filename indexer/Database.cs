@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CommonStuff.BE;
 using Microsoft.Data.Sqlite;
 
 namespace Indexer
@@ -24,7 +25,7 @@ namespace Indexer
             Execute("DROP TABLE IF EXISTS Occ");
 
             Execute("DROP TABLE IF EXISTS document");
-            Execute("CREATE TABLE document(id INTEGER PRIMARY KEY, url TEXT, idxTime TEXT)");
+            Execute("CREATE TABLE document(id INTEGER PRIMARY KEY, url TEXT, idxTime TEXT, creationTime TEXT)");
 
             Execute("DROP TABLE IF EXISTS word");
             Execute("CREATE TABLE word(id INTEGER PRIMARY KEY, name VARCHAR(50))");
@@ -116,20 +117,25 @@ namespace Indexer
 
         }
 
-        public void InsertDocument(int id, string url)
+        public void InsertDocument(BEDocument doc)
         {
 
-            var insertCmd = new SqliteCommand("INSERT INTO document(id, url, idxTime) VALUES(@id,@url, @idxTime)");
+            var insertCmd = new SqliteCommand("INSERT INTO document(id, url, idxTime, creationTime) VALUES(@id,@url, @idxTime, @creationTime)");
             insertCmd.Connection = _connection;
 
-            var pName = new SqliteParameter("url", url);
-            insertCmd.Parameters.Add(pName);
+            var pId = new SqliteParameter("id", doc.mId);
+            insertCmd.Parameters.Add(pId);
 
-            var pCount = new SqliteParameter("id", id);
-            insertCmd.Parameters.Add(pCount);
+            var pUrl = new SqliteParameter("url", doc.mUrl);
+            insertCmd.Parameters.Add(pUrl);
 
-            var pIdxTime = new SqliteParameter("idxTime", DateTime.Now.ToShortTimeString());
+            var pIdxTime = new SqliteParameter("idxTime", doc.mIdxTime);
             insertCmd.Parameters.Add(pIdxTime);
+
+            var pCreationTime = new SqliteParameter("creationTime", doc.mCreationTime);
+            insertCmd.Parameters.Add(pCreationTime);
+
+
             insertCmd.ExecuteNonQuery();
 
         }

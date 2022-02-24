@@ -36,16 +36,20 @@ namespace ConsoleSearch
 
                 var docIds = mSearchLogic.GetDocuments(wordIds);
 
+                TimeSpan used = DateTime.Now - start;
+
                 // get details for the first 10             
                 var top10 = new List<int>();
                 foreach (var p in docIds.GetRange(0, Math.Min(10, docIds.Count)))
                     top10.Add(p.Key);
 
-                TimeSpan used = DateTime.Now - start;
+                
 
                 int idx = 0;
                 foreach (var doc in mSearchLogic.GetDocumentDetails(top10)) {
-                    Console.WriteLine("" + (idx+1) + ": " + doc + " -- contains " + docIds[idx].Value + " search terms");
+                    Console.WriteLine("" + (idx+1) + ": " + doc.mUrl + " -- contains " + docIds[idx].Value + " search terms");
+                    Console.WriteLine("Index time: " + doc.mIdxTime + ". Creation time: " + doc.mCreationTime);
+                    Console.WriteLine();
                     idx++;
                 }
                 Console.WriteLine("Documents: " + docIds.Count + ". Time: " + used.TotalMilliseconds);

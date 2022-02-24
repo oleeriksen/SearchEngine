@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using CommonStuff.BE;
 
 namespace Indexer
 {
@@ -9,7 +10,7 @@ namespace Indexer
         private readonly char[] sep = " \\\n\t\"$'!,?;.:-_**+=)([]{}<>/@&%€#".ToCharArray();
 
         private Dictionary<string, int> words = new Dictionary<string, int>();
-        private Dictionary<string, int> documents = new Dictionary<string, int>();
+        private List<BEDocument> documents = new List<BEDocument>();
 
         Database mdatabase;
 
@@ -53,8 +54,16 @@ namespace Indexer
             foreach (var file in dir.EnumerateFiles())
                 if (extensions.Contains(file.Extension))
                 {
-                    documents.Add(file.FullName, documents.Count+1);
-                    mdatabase.InsertDocument(documents[file.FullName], file.FullName);
+                    BEDocument newDoc = new BEDocument
+                    {
+                        mId = documents.Count + 1,
+                        mUrl = file.FullName,
+                        mIdxTime = DateTime.Now.ToString(),
+                        mCreationTime = file.CreationTime.ToString()
+                    };
+                    documents.Add(newDoc);
+                    
+                    mdatabase.InsertDocument(newDoc);
                     Dictionary<string, int> newWords = new Dictionary<string, int>();
                     ISet<string> wordsInFile = ExtractWordsInFile(file);
                     foreach (var aWord in wordsInFile)
@@ -67,7 +76,7 @@ namespace Indexer
                     }
                     mdatabase.InsertAllWords(newWords);
 
-                    mdatabase.InsertAllOcc(documents[file.FullName], GetWordIdFromWords(wordsInFile));
+                    mdatabase.InsertAllOcc(newDoc.mId, GetWordIdFromWords(wordsInFile));
 
 
                 }

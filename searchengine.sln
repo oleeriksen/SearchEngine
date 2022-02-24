@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "indexer", "indexer\indexer.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleSearch", "ConsoleSearch\ConsoleSearch.csproj", "{8DF99C5C-09E2-430F-8DAD-5052DF2A9076}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonStuff", "CommonStuff\CommonStuff.csproj", "{0042B50C-3B63-463F-A130-D83833E4056B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8DF99C5C-09E2-430F-8DAD-5052DF2A9076}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DF99C5C-09E2-430F-8DAD-5052DF2A9076}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DF99C5C-09E2-430F-8DAD-5052DF2A9076}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0042B50C-3B63-463F-A130-D83833E4056B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0042B50C-3B63-463F-A130-D83833E4056B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0042B50C-3B63-463F-A130-D83833E4056B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0042B50C-3B63-463F-A130-D83833E4056B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

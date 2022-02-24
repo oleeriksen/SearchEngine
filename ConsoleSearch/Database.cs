@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using CommonStuff;
+using CommonStuff.BE;
 using Microsoft.Data.Sqlite;
 
 namespace ConsoleSearch
@@ -11,7 +13,7 @@ namespace ConsoleSearch
         {
             var connectionStringBuilder = new SqliteConnectionStringBuilder();
 
-            connectionStringBuilder.DataSource = "/Users/ole/database/searchDB.db";
+            connectionStringBuilder.DataSource = Config.DATABASE;
 
 
             _connection = new SqliteConnection(connectionStringBuilder.ConnectionString);
@@ -110,9 +112,9 @@ ORDER BY COUNT(docId) DESC;
             return res;
         }
 
-        public List<string> GetDocDetails(List<int> docIds)
+        public List<BEDocument> GetDocDetails(List<int> docIds)
         {
-            List<string> res = new List<string>();
+            List<BEDocument> res = new List<BEDocument>();
 
             var selectCmd = _connection.CreateCommand();
             selectCmd.CommandText = "SELECT * FROM document where id in " + AsString(docIds);
@@ -123,8 +125,10 @@ ORDER BY COUNT(docId) DESC;
                 {
                     var id = reader.GetInt32(0);
                     var url = reader.GetString(1);
+                    var idxTime = reader.GetString(2);
+                    var creationTime = reader.GetString(3);
 
-                    res.Add(url);
+                    res.Add(new BEDocument { mId = id, mUrl = url, mIdxTime = idxTime, mCreationTime = creationTime });
                 }
             }
             return res;
