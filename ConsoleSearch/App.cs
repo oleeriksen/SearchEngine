@@ -34,25 +34,20 @@ namespace ConsoleSearch
 
                 DateTime start = DateTime.Now;
 
-                var docIds = mSearchLogic.GetDocuments(wordIds);
+                var result = mSearchLogic.Search(wordIds, 10);
 
                 TimeSpan used = DateTime.Now - start;
-
-                // get details for the first 10             
-                var top10 = new List<int>();
-                foreach (var p in docIds.GetRange(0, Math.Min(10, docIds.Count)))
-                    top10.Add(p.Key);
 
                 
 
                 int idx = 0;
-                foreach (var doc in mSearchLogic.GetDocumentDetails(top10)) {
-                    Console.WriteLine("" + (idx+1) + ": " + doc.mUrl + " -- contains " + docIds[idx].Value + " search terms");
-                    Console.WriteLine("Index time: " + doc.mIdxTime + ". Creation time: " + doc.mCreationTime);
+                foreach (var doc in result.DocumentHits) {
+                    Console.WriteLine("" + (idx+1) + ": " + doc.Document.mUrl + " -- contains " + doc.NoOfHits + " search terms");
+                    Console.WriteLine("Index time: " + doc.Document.mIdxTime + ". Creation time: " + doc.Document.mCreationTime);
                     Console.WriteLine();
                     idx++;
                 }
-                Console.WriteLine("Documents: " + docIds.Count + ". Time: " + used.TotalMilliseconds);
+                Console.WriteLine("Documents: " + result.Hits + ". Time: " + used.TotalMilliseconds);
             }
         }
     }

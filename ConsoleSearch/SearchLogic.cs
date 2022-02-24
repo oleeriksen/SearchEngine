@@ -24,14 +24,23 @@ namespace ConsoleSearch
             return -1;
         }
 
-        public List<KeyValuePair<int, int>> GetDocuments(List<int> wordIds)
+        public SearchResult Search(List<int> wordIds, int maxAmount)
         {
-            return mDatabase.GetDocuments(wordIds);
+            var docIds =  mDatabase.GetDocuments(wordIds);
+            // get ids for the first maxAmount             
+            var top = new List<int>();
+            foreach (var p in docIds.GetRange(0, Math.Min(maxAmount, docIds.Count)))
+                top.Add(p.Key);
+            List<DocumentHit> docresult = new List<DocumentHit>();
+            int idx = 0;
+            foreach (var doc in mDatabase.GetDocDetails(top))
+            
+                docresult.Add(new DocumentHit(doc, docIds[idx++].Value));
+
+            return new SearchResult(docIds.Count, docresult);
+
         }
 
-        public List<BEDocument> GetDocumentDetails(List<int> docIds)
-        {
-            return mDatabase.GetDocDetails(docIds);
-        }
+       
     }
 }
