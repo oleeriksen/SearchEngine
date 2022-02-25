@@ -14,13 +14,16 @@ namespace ConsoleSearch
      */
     public class SearchResult
     {
-        public SearchResult(int hits, List<DocumentHit> documents, List<string> ignored, TimeSpan timeUsed)
+        public SearchResult(String[] query, int hits, List<DocumentHit> documents, List<string> ignored, TimeSpan timeUsed)
         {
+            Query = query;
             Hits = hits;
             DocumentHits = documents;
             Ignored = ignored;
             TimeUsed = timeUsed;
         }
+
+        public String[] Query { get;  }
 
         public int Hits { get; }
 

@@ -45,7 +45,7 @@ namespace ConsoleSearch
                 docresult.Add(new DocumentHit(doc, docIds[idx++].Value));
 
 
-            return new SearchResult(docIds.Count, docresult, ignored, DateTime.Now - start);
+            return new SearchResult(query, docIds.Count, docresult, ignored, DateTime.Now - start);
         }
 
         private List<int> GetWordIds(String[] query, out List<string> outIgnored)
