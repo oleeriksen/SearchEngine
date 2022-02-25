@@ -24,8 +24,13 @@ namespace ConsoleSearch
             return -1;
         }
 
-        public SearchResult Search(List<int> wordIds, int maxAmount)
+        public SearchResult Search(String[] query, int maxAmount)
         {
+            List<string> ignored;
+
+            DateTime start = DateTime.Now;
+            var wordIds = GetWordIds(query, out ignored);
+
             var docIds =  mDatabase.GetDocuments(wordIds);
             // get ids for the first maxAmount             
             var top = new List<int>();
@@ -37,8 +42,25 @@ namespace ConsoleSearch
             
                 docresult.Add(new DocumentHit(doc, docIds[idx++].Value));
 
-            return new SearchResult(docIds.Count, docresult);
 
+            return new SearchResult(docIds.Count, docresult, ignored, DateTime.Now - start);
+
+        }
+
+        private List<int> GetWordIds(String[] query, out List<string> outIgnored)
+        {
+            var res = new List<int>();
+            var ignored = new List<string>();
+            
+            foreach (var aWord in query)
+            {
+                if (mWords.ContainsKey(aWord))
+                    res.Add(mWords[aWord]);
+                else
+                    ignored.Add(aWord);
+            }
+            outIgnored = ignored;
+            return res;
         }
 
        

@@ -22,23 +22,18 @@ namespace ConsoleSearch
                 string input = Console.ReadLine();
                 if (input.Equals("q")) break;
 
-                var wordIds = new List<int>();
-                var searchTerms = input.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                foreach (var t in searchTerms) {
-                    int id = mSearchLogic.GetIdOf(t);
-                    if ( id != -1)
-                        wordIds.Add(id);
-                    else
-                        Console.WriteLine(t + " will be ignored");
+                var query = input.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+               
+
+                var result = mSearchLogic.Search(query, 10);
+
+                if (result.Ignored.Count > 0) {
+                    Console.WriteLine("Ignored: ");
+                    foreach (var aWord in result.Ignored)
+                    {
+                        Console.WriteLine(aWord + ", ");
+                    }
                 }
-
-                DateTime start = DateTime.Now;
-
-                var result = mSearchLogic.Search(wordIds, 10);
-
-                TimeSpan used = DateTime.Now - start;
-
-                
 
                 int idx = 0;
                 foreach (var doc in result.DocumentHits) {
@@ -47,7 +42,7 @@ namespace ConsoleSearch
                     Console.WriteLine();
                     idx++;
                 }
-                Console.WriteLine("Documents: " + result.Hits + ". Time: " + used.TotalMilliseconds);
+                Console.WriteLine("Documents: " + result.Hits + ". Time: " + result.TimeUsed.TotalMilliseconds);
             }
         }
     }
