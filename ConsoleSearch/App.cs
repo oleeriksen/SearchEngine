@@ -39,11 +39,20 @@ namespace ConsoleSearch
                 foreach (var doc in result.DocumentHits) {
                     Console.WriteLine("" + (idx+1) + ": " + doc.Document.mUrl + " -- contains " + doc.NoOfHits + " search terms");
                     Console.WriteLine("Index time: " + doc.Document.mIdxTime + ". Creation time: " + doc.Document.mCreationTime);
-                    Console.WriteLine();
+                    Console.WriteLine(ArrayAsString(doc.Missing.ToArray()));
                     idx++;
                 }
                 Console.WriteLine("Documents: " + result.Hits + ". Time: " + result.TimeUsed.TotalMilliseconds);
             }
+        }
+
+        string ArrayAsString(string[] s) {
+            if (s.Length == 0)
+                return "Missing: []";
+            string res = "Missing: [";
+            foreach (var str in s)
+                res += str + ", ";
+            return res.Substring(0, res.Length - 2) + "]";
         }
     }
 }

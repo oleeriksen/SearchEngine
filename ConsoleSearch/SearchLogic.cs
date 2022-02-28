@@ -41,9 +41,12 @@ namespace ConsoleSearch
             // all the documentHit
             List<DocumentHit> docresult = new List<DocumentHit>();
             int idx = 0;
-            foreach (var doc in mDatabase.GetDocDetails(top))            
-                docresult.Add(new DocumentHit(doc, docIds[idx++].Value));
-
+            foreach (var doc in mDatabase.GetDocDetails(top))
+            {
+                var missing = mDatabase.WordsFromIds(mDatabase.getMissing(doc.mId, wordIds));
+                  
+                docresult.Add(new DocumentHit(doc, docIds[idx++].Value, missing));
+            }
 
             return new SearchResult(query, docIds.Count, docresult, ignored, DateTime.Now - start);
         }

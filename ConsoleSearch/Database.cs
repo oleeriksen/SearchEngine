@@ -133,5 +133,55 @@ ORDER BY COUNT(docId) DESC;
             }
             return res;
         }
+
+        /* Return a list of id's for words; all them among wordIds, but not present in the document
+         */
+        public List<int> getMissing(int docId, List<int> wordIds)
+        {
+            var sql = "SELECT wordId FROM Occ where ";
+            sql += "wordId in " + AsString(wordIds) + " AND docId = " + docId;
+            sql += " ORDER BY wordId;";
+
+            var selectCmd = _connection.CreateCommand();
+            selectCmd.CommandText = sql;
+
+            List<int> present = new List<int>();
+
+            using (var reader = selectCmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var wordId = reader.GetInt32(0);
+                    present.Add(wordId);
+                }
+            }
+            var result = new List<int>(wordIds);
+            foreach (var w in present)
+                result.Remove(w);
+
+
+            return result;
+        }
+
+        public List<string> WordsFromIds(List<int> wordIds)
+        {
+            var sql = "SELECT name FROM Word where ";
+            sql += "id in " + AsString(wordIds);
+
+            var selectCmd = _connection.CreateCommand();
+            selectCmd.CommandText = sql;
+
+            List<string> result = new List<string>();
+
+            using (var reader = selectCmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var wordId = reader.GetString(0);
+                    result.Add(wordId);
+                }
+            }
+            return result;
+        }
     }
 }
