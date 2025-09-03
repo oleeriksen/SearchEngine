@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core;
 using Shared.Model;
 
-namespace ConsoleSearch
+namespace SearchAPI.Logic
 {
     
 
-    public class SearchLogic : ISearchLogic
+    public class SearchLogic //: ISearchLogic
     {
         IDatabase mDatabase;
 
